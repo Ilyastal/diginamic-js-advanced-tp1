@@ -1,22 +1,26 @@
 const axios = require('axios');
 let Planet = require('./planet');
-
 let promesse = new Promise((resolve, reject) => {
-    let planet = [] ;
-    axios.get('https://swapi.co/api/planets/')
-    .then((response) => {
-        let resultas = response.data.results; 
-        resultas.forEach(plan => {
-            planet.push(new Planet(plan.name, plan.population));
-        });
-        resolve(planet);   
-    })
-    .catch(function (error) {
-        console.log(error);
-    })
+    const planet =[] ;
+    let url = 'https://swapi.co/api/planets/';
+        axios.get(url)
+        .then((response) => {
+            let resultas = response.data.results; 
+            resultas.forEach(plan => {
+                planet.push(new Planet({name: plan.name,population: plan.population }));   
+            });
+            resolve(planet);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
 });
 promesse.then((data) => {
-    console.log(data);
-    console.log("Population total : " + Planet.countPlanetsPopulation(data));    
+    // affichage souhaiter
+    data.forEach(planet =>{
+         console.log(`Planet: ${planet.name} - Population: ${planet.population}`);
+      });
+      //affichage objet data qui a que name et population. 
+    // console.log(data);
+    console.log(`Population total : ${Planet.countPlanetsPopulation(data)}`);    
 });
-

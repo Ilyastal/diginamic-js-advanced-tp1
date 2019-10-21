@@ -1,6 +1,6 @@
 'use strict'
 module.exports = class Planet{
-    constructor(name, population){
+    constructor({name, population}){
         this.name = name;
         this.population = population;
     }
